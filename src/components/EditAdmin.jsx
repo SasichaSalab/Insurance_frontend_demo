@@ -80,7 +80,7 @@ const EditAdmin = () => {
   };
 
   const handleCancel = () => {
-    navigate('/login'); // Navigate to /login
+    navigate('/'); // Navigate to /login
   };
 
   const handleOpenDialog = () => {

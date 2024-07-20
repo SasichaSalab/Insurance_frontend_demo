@@ -11,7 +11,7 @@ const AdminHome = () => {
 
   const videoLink = "https://youtu.be/KZn42zsbPN0?si=CCyKoNGU11KNU9SR";
 
-  const copyLink = "http://localhost:5173/user-login"; // Link to be copied
+  const copyLink = "https://main--insurancdemo.netlify.app/user-login"; // Link to be copied
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(copyLink).then(() => {
