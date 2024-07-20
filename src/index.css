@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.carousel .control-dots .dot {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+
+.carousel .control-dots .dot.selected {
+  background: navy;
+}
+.user-login-container {
+  position: relative;
+  height: 100vh; /* Full height */
+  width: 100vw; /* Full width */
+  overflow: hidden; /* Hide overflow */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the left */
+}
+
+.semi-circle-background {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 0;
+  width: 100vw; /* Extend for the semi-circle */
+  height: 100vh; /* Full height */
+  background: linear-gradient(to bottom, #15B5EE, #0056A9); /* Adjust with your theme colors */
+  clip-path: ellipse(50% 100% at 0 50%); /* Half circle */
+  transform: translateY(-50%); /* Center vertically */
+  z-index: -1; /* Send it to the back */
+}
+
+.content {
+  z-index: 1; /* Bring the content in front */
+  text-align: center;
+  color: white; /* Change as needed */
+  font-size: 24px; /* Change as needed */
+}
+/* styles.css */
+@media (max-width: 768px) {
+  .bg-gradient-sm-md {
+    background: linear-gradient(to bottom, #15B5EE, #0056A9);
+  }
+  .sidebar {
+    width: 80px;
+  }
+
+  .main-content.with-sidebar {
+    margin-left: 80px;
+  }
+}
+/* src/components/Sidebar.css */
+/* src/App.css */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  position: fixed;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+
+.with-sidebar {
+  margin-left: 300px;
+}
+
+
+
+.no-sidebar {
+  margin-left: 0;
+}
+
+.sidebar nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin: 1rem 0;
+}
+
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar nav ul li a.active {
+  font-weight: bold;
+}
+
+.sidebar nav ul li a span {
+  margin-left: 0.5rem;
+}
+.sidebar .icon {
+  color: #000; /* Default icon color */
+}
+
+.sidebar .active .icon {
+  color: #0056A9 /* Primary color for active icon */
+}
+.sidebar .active{
+  color: #0056A9 /* Primary color for active icon */
+}
