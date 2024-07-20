@@ -14,12 +14,13 @@ const AdminHome = () => {
   const copyLink = "https://main--insurancdemo.netlify.app/user-login"; // Link to be copied
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(copyLink).then(() => {
-      alert('Link copied to clipboard');
-    }).catch(err => {
-      console.error('Failed to copy link: ', err);
-      alert('Failed to copy link');
-    });
+    navigate('/user-login')
+    // navigator.clipboard.writeText(copyLink).then(() => {
+    //   alert('Link copied to clipboard');
+    // }).catch(err => {
+    //   console.error('Failed to copy link: ', err);
+    //   alert('Failed to copy link');
+    // });
   };
 
   return (
