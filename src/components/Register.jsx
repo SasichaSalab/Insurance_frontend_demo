@@ -9,7 +9,7 @@ const Register = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCancel = () => {
-    navigate('/login'); // Navigate to /login
+    navigate('/'); // Navigate to /login
   };
   const [formData, setFormData] = useState({
     email: '',
