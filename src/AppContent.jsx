@@ -28,7 +28,7 @@ const AppContent = () => {
   const noSidebarRoutes = [
     '/register',
     '/forgot-password',
-    '/login',
+    '/',
     '/users',
     '/user-login',
     '/home-user'
@@ -45,8 +45,8 @@ const AppContent = () => {
             <Routes>
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/login" element={<AdminLogin />} />
-              <Route path="/" element={<AdminDashboard />} />
+              <Route path="/" element={<AdminLogin />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/admin-insurance" element={<InsuranceAdmin />} />
               <Route path="/users" element={<AllUsers />} />
               <Route path="/super-admin-dashboard" element={<SuperAdminDashboard />} />
@@ -66,7 +66,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/" element={<AdminLogin />} />
           <Route path="/user-login" element={<UserLogin />} />
           <Route path="/home-user" element={<HomeUser />} />
           {/* Include other routes that should not show the sidebar */}

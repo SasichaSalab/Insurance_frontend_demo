@@ -9,7 +9,7 @@ const Sidebar = ({ role }) => {
 
   const adminRoutes = [
     { path: '/home-admin', name: 'Home', icon: <Home /> },
-    { path: '/', name: 'Main', icon: <Home /> },
+    { path: '/admin-dashboard', name: 'Main', icon: <Home /> },
     { path: '/admin-calculate', name: 'Calculate', icon: <Calculate /> },
     { path: '/admin-insurance', name: 'Insurance', icon: <HealthAndSafety /> },
     { path: '/payment', name: 'Payment', icon: <Payment /> },
@@ -30,7 +30,7 @@ const Sidebar = ({ role }) => {
   const handleLogout = () => {
     // Clear any user-related data (e.g., localStorage, sessionStorage)
     localStorage.removeItem('userRole');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
