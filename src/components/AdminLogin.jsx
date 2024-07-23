@@ -64,7 +64,7 @@ const AdminLogin = () => {
       <div className='h-full hidden md:block' style={{ backgroundColor: theme.palette.primary.main, width: '50%' }}>
         <div className='w-full h-full flex flex-row items-center justify-center p-5'>
           <div className='h-full w-5/12 flex flex-row items-center justify-center'>
-            <div className='h-96 w-80 bg-white rounded-lg'>
+            <div className='h-96 w-72 bg-white rounded-lg'>
               <Carousel
                 selectedItem={currentSlide}
                 onChange={(index) => setCurrentSlide(index)}
