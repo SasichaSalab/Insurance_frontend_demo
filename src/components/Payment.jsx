@@ -30,7 +30,13 @@ const Payment = () => {
   };
 
   const handleNext = () => {
-    setActiveStep((prev) => prev + 1);
+    if (activeStep === steps.length - 1) {
+      // On the last step, close the dialog and reset the step
+      handleCloseDialog();
+      setActiveStep(0);
+    } else {
+      setActiveStep((prev) => prev + 1);
+    }
   };
 
   const handleBack = () => {
@@ -42,10 +48,22 @@ const Payment = () => {
   };
 
   const steps = [
-    'Scan QR Code',
-    'Attach Payment Slip',
-    'Waiting for Admin Approval'
+    'สแกน QR Code',
+    'แนบสลิป',
+    'รอผู้ดูแลระบบอนุมัติ'
   ];
+
+  const getDescription = (title) => {
+    if (title === 'Calculation') {
+      return 'ลูกค้าสามารถคำนวณเพื่อดูค่าตอบแทนและความคุ้มครองเองได้';
+    } else if (title === 'Export file') {
+      return 'สามารถบันทึกไฟล์เป็น PDF และ รูปภาพ เพื่อนำไปเสนอลูกค้าได้';
+    } else if (title === 'Dashboard') {
+      return 'เก็บข้อมูล การทดลองคำนวณประกันของลูกค้า เพื่อเพิ่มยอดขายให้ได้มากขึ้น';
+    } else {
+      return 'Default description.';
+    }
+  };
 
   return (
     <div className='h-screen w-full bg-white flex flex-col items-start justify-start p-5'>
@@ -71,36 +89,40 @@ const Payment = () => {
                   <CalculateOutlined style={{ fontSize: 60, color: theme.palette.primary.main }} />
                 </div>
                 <div className='flex flex-col'>
-                  <Typography variant='h5' sx={{ fontWeight: 'bold', color: theme.palette.primary.main }} className='pb-3'>{title}</Typography>
-                  <Typography>Some description for {title}</Typography>
+                  <Typography variant='h5' sx={{ fontWeight: 'bold', color: theme.palette.primary.main }} className='pb-3'>
+                    {title}
+                  </Typography>
+                  <Typography>
+                    {getDescription(title)}
+                  </Typography>
                 </div>
               </div>
             ))}
           </Carousel>
         </div>
-        <div className='w-2/5 flex flex-col items-center justify-center gap-2'>
-          <div className='w-full flex flex-row items-center justify-center gap-2'>
-            <Button className='p-5 m-2 w-52 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
+        <div className='xl:w-2/5 lg:w-2/3 w-full flex flex-col items-center justify-center gap-2 p-5'>
+          <div className='w-full flex flex-wrap items-center justify-center gap-2'>
+            <Button className='p-5 m-2 w-44 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
               <Today style={{ fontSize: 60, color: 'white' }} />
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>รายเดือน</Typography>
               <Typography variant='h5' color='white' sx={{ fontWeight: 'bold' }}>1,431</Typography>
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>บาท/เดือน</Typography>
             </Button>
-            <Button className='p-5 m-2 w-52 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
+            <Button className='p-5 m-2 w-44 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
               <DateRange style={{ fontSize: 60, color: 'white' }} />
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>ราย 3 เดือน</Typography>
               <Typography variant='h5' color='white' sx={{ fontWeight: 'bold' }}>4,293</Typography>
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>บาท/3เดือน</Typography>
             </Button>
           </div>
-          <div className='w-full flex flex-row items-center justify-center gap-2'>
-            <Button className='p-5 m-2 w-52 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
+          <div className='w-full flex flex-wrap items-center justify-center gap-2'>
+            <Button className='p-5 m-2 w-44 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
               <CalendarMonth style={{ fontSize: 60, color: 'white' }} />
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>ราย 6 เดือน</Typography>
               <Typography variant='h5' color='white' sx={{ fontWeight: 'bold' }}>8,268</Typography>
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>บาท/6เดือน</Typography>
             </Button>
-            <Button className='p-5 m-2 w-52 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
+            <Button className='p-5 m-2 w-44 rounded-xl font-bold text-white flex flex-col items-center text-center gap-3' style={{ background: 'linear-gradient(to bottom, #15B5EE, #0056A9)' }} onClick={handleOpenDialog}>
               <PlusOne style={{ fontSize: 60, color: 'white' }} />
               <Typography variant='h6' color='white' sx={{ fontWeight: 'bold' }}>รายปี</Typography>
               <Typography variant='h5' color='white' sx={{ fontWeight: 'bold' }}>15,900</Typography>
@@ -113,7 +135,7 @@ const Payment = () => {
       {/* QR Code Payment Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
         <DialogTitle>
-          QR Code Payment
+          ชำระเงินด้วย QR Code
           <IconButton
             aria-label="close"
             onClick={handleCloseDialog}
@@ -139,7 +161,7 @@ const Payment = () => {
             {activeStep === 0 && (
               <div className='flex flex-col items-center'>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/800px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="QR Code" style={{ width: 256, height: 256 }} />
-                <Typography variant="h6" sx={{ mt: 2 }}>Scan this QR code to proceed with payment.</Typography>
+                <Typography variant="h6" sx={{ mt: 2 }}>ชื่อบัญชี abcd efg</Typography>
               </div>
             )}
             {activeStep === 1 && (
@@ -158,20 +180,20 @@ const Payment = () => {
               </div>
             )}
             {activeStep === 2 && (
-              <div className='flex flex-col items-center'>
-                <Typography variant="h6">Your payment is under review.</Typography>
-                <Typography variant="body1">Please wait for an email confirmation from the admin before you can start using the service.</Typography>
+              <div className='flex flex-col items-center text-center'>
+                <Typography variant="h6">ชำระเงินสำเร็จแล้ว</Typography>
+                <Typography variant="body1">การสมัครสมาชิกของคุณจะถูกส่งไปยังผู้ดูแลระบบ เมื่อผู้ดูและระบบอนุมัติการสมัครสมาชิกจึงจะสามารถใช้งานได้ กรุณารอรับอีเมล</Typography>
               </div>
             )}
             <div className='mt-5'>
-              <Button disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+              <Button disabled={activeStep === 0} onClick={handleBack}>กลับ</Button>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
                 sx={{ ml: 2 }}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? 'ยอมรับ' : 'ถัดไป'}
               </Button>
             </div>
           </div>
@@ -180,4 +202,5 @@ const Payment = () => {
     </div>
   );
 };
+
 export default Payment;

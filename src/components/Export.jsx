@@ -14,7 +14,7 @@ const Export = () => {
   };
 
   return (
-    <div className='bg-zinc-200 w-full h-screen p-5 flex flex-col gap-2'>
+    <div className='w-full  p-5 flex flex-col gap-2'>
       <div className='w-full gap-5 flex flex-row'>
         <Typography variant='h6' sx={{ fontWeight: 'bold' }}>เรียน josj akfjif</Typography>
         <Typography variant='h6' sx={{ fontWeight: 'bold' }}>เพศ ชาย</Typography>

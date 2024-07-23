@@ -29,7 +29,7 @@ const AdminHome = () => {
         <AdminData>
           <div className='flex flex-col items-start'>
             <Button variant="outlined" color="primary" onClick={handleCopyLink}>
-              <Link style={{ color: 'white', width: 20, height: 20, marginRight: 2 }} /> Copy Link For user
+              <Link style={{ color: 'black', width: 20, height: 20,marginRight:5}} /> คัดลอกลิงก์สำหรับลูกค้า
             </Button>
           </div>
           <div className='rounded-lg shadow-sm w-full flex flex-col items-center mt-2'>

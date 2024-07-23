@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { 
-    TextField, MenuItem, FormControl, InputLabel, Select, ToggleButton, ToggleButtonGroup, IconButton, 
-    Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, Toolbar, AppBar, Slide, Menu,ListItemText
+import {
+    TextField, MenuItem, FormControl, InputLabel, Select, ToggleButton, ToggleButtonGroup, IconButton,
+    Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, Toolbar, AppBar, Slide, Menu, ListItemText
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
@@ -11,11 +11,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import ImageIcon from '@mui/icons-material/Image';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import Export from './Export';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
 
 const InsuranceForm = () => {
     const [insuranceName, setInsuranceName] = useState('');
@@ -56,44 +59,69 @@ const InsuranceForm = () => {
     };
 
     const handleExportAsPDF = () => {
-        console.log("Exporting as PDF");
-        handleExportMenuClose();
+        const input = document.getElementById('export-content');
+        html2canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('export.pdf');
+            })
+            .finally(() => {
+                handleExportMenuClose();
+            });
     };
 
     const handleExportAsJPEG = () => {
-        console.log("Exporting as JPEG");
-        handleExportMenuClose();
+        const input = document.getElementById('export-content');
+        html2canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/jpeg');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'export.jpeg';
+                link.click();
+            })
+            .finally(() => {
+                handleExportMenuClose();
+            });
     };
 
     return (
         <div className="p-4 space-y-4 bg-white rounded-lg shadow-md">
             {/* Part 1: Choosing Insurance */}
             <div className='w-full flex flex-col'>
-                <h2 className="text-lg font-semibold mb-2">Choose Insurance</h2>
+                <h2 className="text-lg font-semibold mb-2">เลือกประกัน</h2>
                 <div className='w-full flex flex-row gap-2'>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="insurance-name-label">Insurance Name</InputLabel>
+                        <InputLabel id="insurance-name-label">เลือกประกัน</InputLabel>
                         <Select
                             labelId="insurance-name-label"
                             value={insuranceName}
                             onChange={(e) => setInsuranceName(e.target.value)}
                             label="Insurance Name"
                         >
-                            <MenuItem value="insurance1">Insurance 1</MenuItem>
-                            <MenuItem value="insurance2">Insurance 2</MenuItem>
+                            <MenuItem value="insurance1">กรุงเทพสุดคุ้ม</MenuItem>
+                            <MenuItem value="insurance2">กรุงเทพสมาร์ทคิดส์</MenuItem>
+                            <MenuItem value="insurance3">แฮปปี้เซฟวิ่ง 2515 (มีเงินปันผล)</MenuItem>
+                            <MenuItem value="insurance4">ตลอดชีพสุดคุ้ม</MenuItem>
                             {/* Add more options as needed */}
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="insurance-plan-label">Insurance Plan</InputLabel>
+                        <InputLabel id="insurance-plan-label">แผน</InputLabel>
                         <Select
                             labelId="insurance-plan-label"
                             value={insurancePlan}
                             onChange={(e) => setInsurancePlan(e.target.value)}
                             label="Insurance Plan"
                         >
-                            <MenuItem value="plan1">Plan 1</MenuItem>
-                            <MenuItem value="plan2">Plan 2</MenuItem>
+                            <MenuItem value="plan1">15/9</MenuItem>
+                            <MenuItem value="plan2">8/12</MenuItem>
+                            <MenuItem value="plan2">21/15</MenuItem>
                             {/* Add more options as needed */}
                         </Select>
                     </FormControl>
@@ -103,23 +131,24 @@ const InsuranceForm = () => {
             {/* Part 2: Insured Information */}
             <div className='w-full flex flex-wrap xl:flex-row lg:flex-row'>
                 <div className='w-full xl:w-1/2 lg:w-1/2 p-2'>
-                    <h2 className="text-lg font-semibold mb-2">Insured Information</h2>
+                    <h2 className="text-lg font-semibold mb-2">กรอกข้อมูลผู้ทำประกัน</h2>
                     <div className="mb-4">
-                        <h3 className="text-md font-medium mb-2">Gender</h3>
+                        <h3 className="text-md font-medium mb-2">เพศ</h3>
                         <ToggleButtonGroup
                             value={gender}
                             exclusive
                             onChange={handleGenderChange}
                             aria-label="gender"
                         >
-                            <ToggleButton value="female">Female</ToggleButton>
-                            <ToggleButton value="male">Male</ToggleButton>
+                            <ToggleButton value="female">หญิง</ToggleButton>
+                            <ToggleButton value="male">ชาย</ToggleButton>
                         </ToggleButtonGroup>
                     </div>
                     <div className="mb-4">
+                        <h3 className="text-md font-medium mb-2">วัน/เดือน/ปี เกิด</h3>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
-                                label="Date Picker"
+                                label="วัน/เดือน/ปี"
                                 format="YYYY/MM/DD"
                                 defaultValue={dayjs('2022-04-17')}
                             />
@@ -128,53 +157,64 @@ const InsuranceForm = () => {
                             **หมายเหตุหากวันที่ทำประกันเกินวันเกิดมามากกว่า6เดือน จะถือว่าอายุเท่าปีถัดไป
                         </Typography>
                     </div>
-                    <FormControl fullWidth margin="normal">
-                        <InputLabel id="saving-format-label">Saving Format</InputLabel>
-                        <Select
-                            labelId="saving-format-label"
-                            value={savingFormat}
-                            onChange={(e) => setSavingFormat(e.target.value)}
-                            label="Saving Format"
-                        >
-                            <MenuItem value="1_month">1 Month</MenuItem>
-                            <MenuItem value="3_months">3 Months</MenuItem>
-                            <MenuItem value="6_months">6 Months</MenuItem>
-                            <MenuItem value="1_year">1 Year</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField
-                        fullWidth
-                        label="Amount of Savings"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        margin="normal"
-                    />
+                    <div className="mb-4">
+                        <h3 className="text-md font-medium mb-2">คุณคือนักออมสายไหน</h3>
+                        <FormControl fullWidth margin="normal">
+
+                            <InputLabel id="saving-format-label">คุณคือนักออมสายไหน</InputLabel>
+                            <Select
+                                labelId="saving-format-label"
+                                value={savingFormat}
+                                onChange={(e) => setSavingFormat(e.target.value)}
+                                label="Saving Format"
+                            >
+                                <MenuItem value="1_month">สายตั้งเป้าหมาย (ตั้งจาก เงินที่ต้องการในอนาคต)</MenuItem>
+                                <MenuItem value="3_months">สายเน้นความคุ้มครองชีวิต เริ่มจากทุนประกัน</MenuItem>
+                                <MenuItem value="6_months">สายมุ่งมั่น ไปเรื่อยๆ เท่าที่ไหว (ตั้งจากยอดออมรายเดือน)</MenuItem>
+                                <MenuItem value="1_year">สายอยากออมราย 3 เดือน</MenuItem>
+                                <MenuItem value="1_year">สายอยากออมราย 6 เดือน</MenuItem>
+                                <MenuItem value="1_year">สายลดหย่อนภาษี (ตั้งจากยอดออมรายปี)</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div className="mb-4">
+                        <h3 className="text-md font-medium mb-2">จำนวนเงิน</h3>
+                        <TextField
+                            fullWidth
+                            label="จำนวนเงิน"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            margin="normal"
+                        /></div>
                 </div>
                 <div className='w-full xl:w-1/2 lg:w-1/2 p-2'>
-                    <h2 className="text-lg font-semibold mb-2">Additional Information</h2>
+                    <h2 className="text-lg font-semibold mb-2">ข้อมูลผู้เอาประกัน</h2>
+                    <div className="mb-4">
+                        <h3 className="text-md font-medium mb-2">ชื่อผู้เอาประกัน</h3>
                     <TextField
                         fullWidth
                         label="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         margin="normal"
-                    />
+                    /></div>
                     <div className="mb-4">
-                        <h3 className="text-md font-medium mb-2">Gender</h3>
+                        <h3 className="text-md font-medium mb-2">เพศ</h3>
                         <ToggleButtonGroup
                             value={beneficiary}
                             exclusive
                             onChange={handleBeneficiaryGenderChange}
                             aria-label="gender"
                         >
-                            <ToggleButton value="female">Female</ToggleButton>
-                            <ToggleButton value="male">Male</ToggleButton>
+                            <ToggleButton value="female">หญิง</ToggleButton>
+                            <ToggleButton value="male">ชาย</ToggleButton>
                         </ToggleButtonGroup>
                     </div>
                     <div className="mb-4">
+                    <h3 className="text-md font-medium mb-2">วัน/เดือน/ปี เกิด</h3>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
-                                label="Date Picker"
+                                label="วัน/เดือน/ปี เกิด"
                                 format="YYYY/MM/DD"
                                 defaultValue={dayjs('2022-04-17')}
                             />
@@ -188,7 +228,7 @@ const InsuranceForm = () => {
 
             <div className="flex justify-center mt-4">
                 <Button variant="contained" color="primary" onClick={handleDialogOpen}>
-                    Calculate
+                    คำนวณ
                 </Button>
             </div>
 
@@ -200,42 +240,43 @@ const InsuranceForm = () => {
             >
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleDialogClose}
-                            aria-label="close"
-                        >
+                        <IconButton edge="start" color="inherit" onClick={handleDialogClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            {isSmallScreen ? 'ใบเสนอ...' : 'ใบเสนอสรุปผลประโยชน์และความคุ้มครอง'}
+                            Your Export
                         </Typography>
-                        <Button
+                        <IconButton
                             color="inherit"
                             onClick={handleExportMenuOpen}
-                            startIcon={<PictureAsPdfIcon />}
-                            sx={{marginLeft:5}}
                         >
-                            Export
-                        </Button>
+                            <ImageIcon />
+                        </IconButton>
                         <Menu
                             anchorEl={exportMenuAnchorEl}
                             open={Boolean(exportMenuAnchorEl)}
                             onClose={handleExportMenuClose}
                         >
-                            <MenuItem onClick={handleExportAsPDF}>
-                                <PictureAsPdfIcon fontSize="small" />
-                                <ListItemText primary="Export as PDF" />
-                            </MenuItem>
                             <MenuItem onClick={handleExportAsJPEG}>
-                                <ImageIcon fontSize="small" />
                                 <ListItemText primary="Export as JPEG" />
+                            </MenuItem>
+                            <MenuItem onClick={handleExportAsPDF}>
+                                <ListItemText primary="Export as PDF" />
                             </MenuItem>
                         </Menu>
                     </Toolbar>
                 </AppBar>
-                <Export/>
+                <DialogContent>
+                    <div id="export-content">
+                        <Export
+                        />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
             </Dialog>
         </div>
     );

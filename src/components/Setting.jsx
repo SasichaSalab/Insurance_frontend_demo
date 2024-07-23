@@ -49,6 +49,7 @@ const Setting = () => {
   return (
     <div className='w-full flex flex-col lg:flex-col gap-2 p-5'>
       <Typography variant='h4'>Settings</Typography>
+      <Typography variant='h6'>การยืนยันตัวตนของลูกค้า</Typography>
       <FormControlLabel
         control={
           <Switch
@@ -59,6 +60,7 @@ const Setting = () => {
         }
         label='Verify User'
       />
+      <Typography variant='h6'>หมายเลขพร้อมเพย์</Typography>
       <TextField
         label='Payment Number'
         name='paymentNumber'
@@ -67,6 +69,7 @@ const Setting = () => {
         fullWidth
         margin='normal'
       />
+      <Typography variant='h6'>ชื่อบัญชี</Typography>
       <TextField
         label='Payment Name'
         name='paymentName'
@@ -76,7 +79,7 @@ const Setting = () => {
         margin='normal'
       />
       <Button variant='contained' color='primary' onClick={handleSaveSettings}>
-        Save Settings
+        บันทึก
       </Button>
     </div>
   );

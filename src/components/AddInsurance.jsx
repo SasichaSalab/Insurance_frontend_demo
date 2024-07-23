@@ -26,7 +26,7 @@ const periodsOptions = [
   // Add more periods as needed
 ];
 const parentIdOptions = [
-  '1', '2', '3',
+  'ไม่มี','1', '2', '3',
   // Add more periods as needed
 ];
 
@@ -230,10 +230,11 @@ const AddInsurance = () => {
 
   return (
     <div className='p-5 w-full'>
-      <Typography variant='h4'>Add Insurance</Typography>
+      <Typography variant='h4'>เพิ่มประกัน</Typography>
       <div className='my-3'>
+        <Typography>ชื่อประกัน</Typography>
         <TextField
-          label='Name'
+          label='ชื่อประกัน'
           name='name'
           value={insurance.name}
           onChange={handleNameChange}
@@ -242,8 +243,9 @@ const AddInsurance = () => {
         />
         <div className='flex flex-wrap w-full'>
           <div className='w-full xl:w-1/2 lg:w-1/2 xl:pr-4 lg:pr-4'>
+          <Typography>ระยะเวลา</Typography>
             <FormControl fullWidth margin='normal'>
-              <InputLabel>Periods</InputLabel>
+              <InputLabel>ระยะเวลา</InputLabel>
               <Select
                 multiple
                 name='periods'
@@ -261,8 +263,9 @@ const AddInsurance = () => {
             </FormControl>
           </div>
           <div className='w-full xl:w-1/2 lg:w-1/2 xl:pl-4 lg:pl-4'>
+          <Typography>คช</Typography>
             <FormControl fullWidth margin='normal'>
-              <InputLabel id="parent-label">Parent</InputLabel>
+              <InputLabel id="parent-label">คช</InputLabel>
               <Select
                 labelId="parent-label"
                 name='parent'
@@ -282,7 +285,7 @@ const AddInsurance = () => {
       </div>
       <div className='w-full xl:w-1/3 lg:w-1/3 xl:pl-2 lg:pr-2 my-3 p-3 rounded-xl flex flex-col gap-5 bg-tertiary '>
         <FormControl fullWidth margin='normal'>
-          <Typography variant='h6'>Upload Premium Rate</Typography>
+          <Typography variant='h6'>อัปโหลดไฟล์อัตราเบี้ย</Typography>
           <input
             type='file'
             accept='.csv, .xlsx, .xls' // Specify allowed file types here
@@ -300,11 +303,11 @@ const AddInsurance = () => {
       </div>
       <div className='flex flex-wrap mb-5' >
         <div className='flex flex-col gap-5  xl:w-1/2 lg:w-1/2 w-full xl:pr-2 lg:pr-2 '>
-          <Typography variant='h5'>Protect</Typography>
+          <Typography variant='h5'>ความคุ้มครอง</Typography>
           {protect.map((p, index) => (
             <div key={p.id} className='p-5 flex flex-col gap-5 bg-tertiary rounded-xl border-2 border-primary'>
               <TextField
-                label='Protect Name'
+                label='ชื่อความคุ้มครอง'
                 name='name'
                 value={p.name}
                 onChange={(e) => handleChange(e, setProtect, index)}
@@ -314,7 +317,7 @@ const AddInsurance = () => {
                 .filter(pd => pd.protectId === p.id)
                 .map((pd, pdIndex) => (
                   <div key={pd.id} className='p-5 flex flex-col gap-5 items-start justify-start bg-white rounded-xl border-2 border-secondary'>
-                    <Typography variant='h6'>Protect Details {pdIndex + 1}</Typography>
+                    <Typography variant='h6'>รายละเอียดความคุ้มครอง {pdIndex + 1}</Typography>
                     <TextField
                       label='Name'
                       name='name'
@@ -359,22 +362,22 @@ const AddInsurance = () => {
                     />
                   </div>
                 ))}
-              <Button variant='outlined' sx={{ width: 210, alignItems: 'center' }} onClick={() => handleAddEntry(setProtectDetails, { name: '', calculate: '', max_age: '', min_age: '', note: '', protectId: p.id })}>
-                <Add style={{ fontSize: 30, color: theme.palette.primary.main }} />Add Protect Detail
+              <Button variant='outlined' sx={{ width: 250, alignItems: 'center' }} onClick={() => handleAddEntry(setProtectDetails, { name: '', calculate: '', max_age: '', min_age: '', note: '', protectId: p.id })}>
+                <Add style={{ fontSize: 30, color: theme.palette.primary.main }} />เพิ่มรายละเอียดความคุ้มครอง
               </Button>
             </div>
           ))}
           <Button variant='contained' sx={{ width: 250, alignItems: 'center' }} onClick={() => handleAddEntry(setProtect, { name: '' })}>
-            <Add style={{ fontSize: 30, color: 'white' }} />Add Protect
+            <Add style={{ fontSize: 30, color: 'white' }} />เพิ่มความคุ้มครอง
           </Button>
         </div>
 
         <div className='flex flex-col gap-5 xl:w-1/2 lg:w-1/2 w-full xl:pl-2 lg:pl-2' >
-          <Typography variant='h5'>Saved</Typography>
+          <Typography variant='h5'>แผนการออม</Typography>
           {saved.map((s, index) => (
             <div key={s.id} className='p-5 flex flex-col gap-5 bg-tertiary rounded-xl border-2 border-primary'>
               <TextField
-                label='Saved Name'
+                label='ชื่อแผนการออม'
                 name='name'
                 value={s.name}
                 onChange={(e) => handleChange(e, setSaved, index)}
@@ -384,7 +387,7 @@ const AddInsurance = () => {
                 .filter(sd => sd.savedId === s.id)
                 .map((sd, sdIndex) => (
                   <div key={sd.id} className='p-5 flex flex-col gap-5 items-start justify-start bg-white rounded-xl border-2 border-secondary'>
-                    <Typography variant='h6'>Saved Details {sdIndex + 1}</Typography>
+                    <Typography variant='h6'>รายละเอียดแผนการออม {sdIndex + 1}</Typography>
                     <TextField
                       label='Name'
                       name='name'
@@ -428,17 +431,17 @@ const AddInsurance = () => {
                   </div>
                 ))}
               <Button variant='outlined' sx={{ width: 200, alignItems: 'center' }} onClick={() => handleAddEntry(setSavedDetails, { name: '', calculate: '', max_year: '', min_year: '', note: '', savedId: s.id })}>
-                <Add style={{ fontSize: 30, color: theme.palette.primary.main }} />Add Saved Detail
+                <Add style={{ fontSize: 30, color: theme.palette.primary.main }} />เพิ่มรายละเอียดแผนการออม
               </Button>
             </div>
           ))}
           <Button variant='contained' sx={{ width: 200, alignItems: 'center' }} onClick={() => handleAddEntry(setSaved, { name: '' })}>
-            <Add style={{ fontSize: 30, color: 'white' }} />Add Saved
+            <Add style={{ fontSize: 30, color: 'white' }} />เพิ่มแผนการออม
           </Button>
         </div>
       </div>
       <Button variant='contained' color='primary' onClick={handleSubmit} className='w-full'>
-        Add Insurance
+        บันทึก
       </Button>
 
       {/* Calculator Dialog */}

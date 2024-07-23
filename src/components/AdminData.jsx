@@ -16,12 +16,12 @@ const AdminData = ({ children }) => {
                         </div>
                         <div className='flex flex-wrap items-start justify-start gap-5'>
                             <div className='flex flex-col items-start justify-start gap-2'>
-                                <div className='text-gray-500'>Phone: 123-456-7890</div>
-                                <div className='text-gray-500'>Position: Manager</div>
+                                <div className='text-gray-500'>เบอร์โทรศัพท์: 123-456-7890</div>
+                                <div className='text-gray-500'>ตำแหน่ง: ผู้จัดการ</div>
                             </div>
                             <div className='flex flex-col items-start justify-start gap-2'>
-                                <div className='text-gray-500'>Company: ABC Corp</div>
-                                <div className='text-gray-500'>License Number: 123456789</div>
+                                <div className='text-gray-500'>บริษัท: ABC Corp</div>
+                                <div className='text-gray-500'>เลขใบอนุญาติ: 123456789</div>
                             </div>
                         </div>
                     </div>

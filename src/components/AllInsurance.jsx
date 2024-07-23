@@ -10,12 +10,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 const insuranceData = [
-  { id: 1, name: 'Insurance A', minAge: 18, maxAge: 65, coverageYears: 10 },
-  { id: 2, name: 'Insurance B', minAge: 21, maxAge: 60, coverageYears: 15 },
-  { id: 3, name: 'Insurance C', minAge: 25, maxAge: 70, coverageYears: 20 },
-  { id: 4, name: 'Insurance D', minAge: 30, maxAge: 65, coverageYears: 25 },
-  { id: 5, name: 'Insurance E', minAge: 35, maxAge: 55, coverageYears: 30 },
-  { id: 6, name: 'Insurance F', minAge: 40, maxAge: 60, coverageYears: 35 },
+  { id: 1, name: 'กรุงเทพสุดคุ้ม', minAge: 18, maxAge: 65, coverageYears: 10 },
+  { id: 2, name: 'กรุงเทพสมาร์ทคิดส์', minAge: 21, maxAge: 60, coverageYears: 15 },
+  { id: 3, name: 'แฮปปี้เซฟวิ่ง 2515 (มีเงินปันผล)', minAge: 25, maxAge: 70, coverageYears: 20 },
+  { id: 4, name: 'ตลอดชีพสุดคุ้ม', minAge: 30, maxAge: 65, coverageYears: 25 },
+  { id: 5, name: 'อื่นๆ 1', minAge: 35, maxAge: 55, coverageYears: 30 },
+  { id: 6, name: 'อื่นๆ 2', minAge: 40, maxAge: 60, coverageYears: 35 },
   // Add more insurance data as needed
 ];
 

@@ -9,7 +9,7 @@ const Sidebar = ({ role }) => {
 
   const adminRoutes = [
     { path: '/home-admin', name: 'Home', icon: <Home /> },
-    { path: '/admin-dashboard', name: 'Main', icon: <Home /> },
+    { path: '/admin-dashboard', name: 'Main', icon: <Dashboard /> },
     { path: '/admin-calculate', name: 'Calculate', icon: <Calculate /> },
     { path: '/admin-insurance', name: 'Insurance', icon: <HealthAndSafety /> },
     { path: '/payment', name: 'Payment', icon: <Payment /> },

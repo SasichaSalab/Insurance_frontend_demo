@@ -48,7 +48,17 @@ const AdminLogin = () => {
 
     return () => clearInterval(interval);
   }, [totalSlides]);
-
+  const getDescription = (title) => {
+    if (title === 'Calculation') {
+      return 'ลูกค้าสามารถคำนวณเพื่อดูค่าตอบแทนและความคุ้มครองเองได้';
+    } else if (title === 'Export file') {
+      return 'สามารถบันทึกไฟล์เป็น PDF และ รูปภาพ เพื่อนำไปเสนอลูกค้าได้';
+    } else if (title === 'Dashboard') {
+      return 'เก็บข้อมูล การทดลองคำนวณประกันของลูกค้า เพื่อเพิ่มยอดขายให้ได้มากขึ้น';
+    } else {
+      return 'Default description.';
+    }
+  };
   return (
     <div className='h-screen bg-white flex flex-row w-screen'>
       <div className='h-full hidden md:block' style={{ backgroundColor: theme.palette.primary.main, width: '50%' }}>
@@ -66,16 +76,18 @@ const AdminLogin = () => {
                 interval={3000}
                 transitionTime={500}
               >
-                {/* Carousel Items */}
                 {['Calculation', 'Export file', 'Dashboard'].map((title, index) => (
-                  <div key={index} className="h-96 w-80 flex flex-col items-center justify-center gap-5">
+                  <div key={index} className="h-96 w-72 flex flex-col items-center justify-center gap-5">
                     <div className='bg-blue-100 p-5 rounded-full'>
                       <CalculateOutlined style={{ fontSize: 60, color: theme.palette.primary.main }} />
                     </div>
                     <div className='flex flex-col'>
-                      <Typography variant='h5' sx={{ fontWeight: 'bold', color: theme.palette.primary.main }} className='pb-3'>{title}</Typography>
-                      {/* Add appropriate descriptions for each title */}
-                      <Typography>Some description for {title}</Typography>
+                      <Typography variant='h5' sx={{ fontWeight: 'bold', color: theme.palette.primary.main }} className='pb-3'>
+                        {title}
+                      </Typography>
+                      <Typography>
+                        {getDescription(title)}
+                      </Typography>
                     </div>
                   </div>
                 ))}
